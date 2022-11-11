@@ -10,16 +10,23 @@ class Producto{
     }
 }
 
-const juego1 = new Producto(1, "A Plaguetale Requiem" , 10000, "img/juego 1-min.jpg");
+/*const juego1 = new Producto(1, "A Plaguetale Requiem" , 10000, "img/juego 1-min.jpg");
 const juego2 = new Producto(2, "Gotham Knights", 12500, "img/juego 2-min.jpg" );
 const juego3 = new Producto(3, "Fortnite", 18000, "img/juego 3-min.jpg" );
 const juego4 = new Producto(4, "Dying Light 2", 13500, "img/juego 4-min.png" );
 const juego5 = new Producto(5, "Evil Dead", 10000, "img/juego 5-min.jpg" );
-const juego6 = new Producto(6, "Uncharted", 14500, "img/juego 6-min.png" );
+const juego6 = new Producto(6, "Uncharted", 14500, "img/juego 6-min.png" )*/
 
 //Array de productos
+fetch('./data.json')
+.then(response=> response.json())
+.then(datos=>{
+console.log(datos);
 
-const productos = [juego1, juego2, juego3, juego4, juego5, juego6];
+
+
+})
+
 
 /// Array carrito
 
@@ -51,6 +58,13 @@ const mostrarProductos = () => {
         const boton = document.getElementById(`boton${producto.id}`);
         boton.addEventListener("click", () => {
             agregarAlCarrito(producto.id)
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Tu juego se agrego al carrito',
+                showConfirmButton: false,
+                timer: 1500
+            })
         })
     })
 }
@@ -102,6 +116,23 @@ const mostrarCarrito = () => {
         const boton = document.getElementById(`eliminar${producto.id}`);
         boton.addEventListener("click", () => {
             eliminarDelCarrito(producto.id);
+            Swal.fire({
+                title: 'Estas seguro que quieres eliminar este producto?',
+                text: "Estas por eliminar un juego del carrito!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                Swal.fire(
+                    'Borrado!',
+                    'Tu juego fue.',
+                    'success'
+                )
+                }
+            })
         })
     })
     calcularTotal();
